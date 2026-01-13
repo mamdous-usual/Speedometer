@@ -1,0 +1,767 @@
+/**
+ * Speedometer PWA - Main Styles
+ * OneDark Theme (Light & Dark modes)
+ * Optimized for mobile screens (portrait + landscape)
+ */
+
+/* =====================================================
+   OneDark Theme Variables
+   ===================================================== */
+
+/* Dark Theme (Default) - OneDark */
+[data-theme="dark"] {
+  /* OneDark Dark Background Colors */
+  --color-bg-primary: #282c34;
+  --color-bg-secondary: #21252b;
+  --color-bg-tertiary: #2c323c;
+  --color-bg-elevated: #3e4451;
+  --color-bg-input: #1b1d23;
+  
+  /* OneDark Syntax Colors */
+  --color-red: #e06c75;
+  --color-orange: #d19a66;
+  --color-yellow: #e5c07b;
+  --color-green: #98c379;
+  --color-cyan: #56b6c2;
+  --color-blue: #61afef;
+  --color-purple: #c678dd;
+  --color-magenta: #be5046;
+  
+  /* UI Colors */
+  --color-accent: #61afef;
+  --color-accent-hover: #528bcc;
+  --color-accent-glow: rgba(97, 175, 239, 0.4);
+  --color-text-primary: #abb2bf;
+  --color-text-secondary: #7f848e;
+  --color-text-muted: #5c6370;
+  --color-text-bright: #d7dae0;
+  --color-border: #3e4451;
+  
+  /* Semantic Colors */
+  --color-success: #98c379;
+  --color-warning: #e5c07b;
+  --color-danger: #e06c75;
+  
+  /* Gauge colors */
+  --gauge-bg: #21252b;
+  --gauge-track: #3e4451;
+  --gauge-low: #98c379;
+  --gauge-mid: #e5c07b;
+  --gauge-high: #e06c75;
+  --gauge-needle: #abb2bf;
+  --gauge-needle-center: #61afef;
+  
+  /* Shadows */
+  --shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Light Theme - OneDark Light */
+[data-theme="light"] {
+  /* OneDark Light Background Colors */
+  --color-bg-primary: #fafafa;
+  --color-bg-secondary: #f0f0f0;
+  --color-bg-tertiary: #e5e5e6;
+  --color-bg-elevated: #ffffff;
+  --color-bg-input: #ffffff;
+  
+  /* OneDark Light Syntax Colors */
+  --color-red: #e45649;
+  --color-orange: #986801;
+  --color-yellow: #c18401;
+  --color-green: #50a14f;
+  --color-cyan: #0184bc;
+  --color-blue: #4078f2;
+  --color-purple: #a626a4;
+  --color-magenta: #ca1243;
+  
+  /* UI Colors */
+  --color-accent: #4078f2;
+  --color-accent-hover: #3264d6;
+  --color-accent-glow: rgba(64, 120, 242, 0.3);
+  --color-text-primary: #383a42;
+  --color-text-secondary: #696c77;
+  --color-text-muted: #a0a1a7;
+  --color-text-bright: #232529;
+  --color-border: #d3d3d4;
+  
+  /* Semantic Colors */
+  --color-success: #50a14f;
+  --color-warning: #c18401;
+  --color-danger: #e45649;
+  
+  /* Gauge colors */
+  --gauge-bg: #e5e5e6;
+  --gauge-track: #d3d3d4;
+  --gauge-low: #50a14f;
+  --gauge-mid: #c18401;
+  --gauge-high: #e45649;
+  --gauge-needle: #383a42;
+  --gauge-needle-center: #4078f2;
+  
+  /* Shadows */
+  --shadow-color: rgba(0, 0, 0, 0.15);
+}
+
+/* Common Variables (both themes) */
+:root {
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  
+  /* Typography */
+  --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', 'Consolas', 'Monaco', monospace;
+  --font-digital: 'Orbitron', 'Share Tech Mono', var(--font-mono);
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 3rem;
+  --font-size-4xl: 4rem;
+  --font-size-5xl: 5rem;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 400ms ease;
+  --transition-theme: 300ms ease;
+  
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+}
+
+/* =====================================================
+   Reset & Base Styles
+   ===================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-primary);
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  min-height: 100dvh;
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--transition-theme), color var(--transition-theme);
+}
+
+/* =====================================================
+   App Container Layout
+   ===================================================== */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: var(--spacing-md);
+  padding-bottom: env(safe-area-inset-bottom, var(--spacing-md));
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* =====================================================
+   Header Styles
+   ===================================================== */
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm) 0;
+  flex-shrink: 0;
+  gap: var(--spacing-md);
+}
+
+.app-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text-bright);
+  letter-spacing: -0.02em;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/* View Toggle Buttons */
+.view-toggle {
+  display: flex;
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-md);
+  padding: 2px;
+}
+
+.view-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.view-btn:hover {
+  color: var(--color-text-primary);
+}
+
+.view-btn.active {
+  background: var(--color-accent);
+  color: white;
+}
+
+/* Theme Toggle Button */
+.theme-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.theme-btn:hover {
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+}
+
+/* Sun/Moon icons */
+[data-theme="dark"] .icon-sun { display: block; }
+[data-theme="dark"] .icon-moon { display: none; }
+[data-theme="light"] .icon-sun { display: none; }
+[data-theme="light"] .icon-moon { display: block; }
+
+/* Status Indicators */
+.status-indicators {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  transition: background-color var(--transition-theme);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-text-muted);
+  transition: background var(--transition-normal);
+}
+
+.status-badge[data-status="active"] .status-dot {
+  background: var(--color-success);
+  box-shadow: 0 0 8px var(--color-success);
+  animation: pulse 2s infinite;
+}
+
+.status-badge[data-status="error"] .status-dot {
+  background: var(--color-danger);
+}
+
+.accuracy-badge {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-family: var(--font-mono);
+  transition: background-color var(--transition-theme);
+}
+
+.accuracy-value {
+  font-weight: 600;
+}
+
+/* =====================================================
+   Analog Speedometer Section
+   ===================================================== */
+.speedometer-section {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md) 0;
+}
+
+.speedometer-section.hidden {
+  display: none;
+}
+
+.speedometer-analog .speedometer-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+  aspect-ratio: 1;
+}
+
+#speedometer-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* =====================================================
+   Digital Speedometer Section
+   ===================================================== */
+.speedometer-digital {
+  padding: var(--spacing-lg);
+}
+
+.digital-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xl);
+  padding: var(--spacing-xl);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-theme);
+  min-height: 350px;
+}
+
+.digital-main {
+  text-align: center;
+}
+
+.digital-speed-value {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 8rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-accent);
+  letter-spacing: -0.02em;
+  text-shadow: 0 0 40px var(--color-accent-glow);
+  transition: all var(--transition-theme);
+}
+
+.digital-speed-unit {
+  display: block;
+  font-size: var(--font-size-2xl);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-top: var(--spacing-md);
+}
+
+/* Digital Secondary Info */
+.digital-secondary {
+  display: flex;
+  gap: var(--spacing-xl);
+  margin-top: var(--spacing-lg);
+}
+
+.digital-info-item {
+  text-align: center;
+  padding: var(--spacing-md);
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-md);
+  min-width: 80px;
+}
+
+.digital-info-label {
+  display: block;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--spacing-xs);
+}
+
+.digital-info-value {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  color: var(--color-text-bright);
+}
+
+/* =====================================================
+   Stats Panel
+   ===================================================== */
+.stats-panel {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) 0;
+  flex-shrink: 0;
+}
+
+.stats-panel.hidden {
+  display: none;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-md);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  text-align: center;
+  transition: all var(--transition-theme);
+}
+
+.stat-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--spacing-xs);
+}
+
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--color-text-bright);
+}
+
+.stat-unit {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+/* =====================================================
+   Control Buttons
+   ===================================================== */
+.controls-section {
+  display: flex;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) 0;
+  flex-shrink: 0;
+}
+
+.control-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.control-btn:active {
+  transform: scale(0.98);
+}
+
+.control-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: white;
+  box-shadow: 0 4px 12px var(--color-accent-glow);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--color-accent-hover);
+  box-shadow: 0 6px 20px var(--color-accent-glow);
+}
+
+.btn-secondary {
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--color-bg-elevated);
+}
+
+.btn-icon {
+  font-size: var(--font-size-lg);
+}
+
+/* =====================================================
+   Message Container
+   ===================================================== */
+.message-container {
+  position: fixed;
+  bottom: var(--spacing-xl);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 10px 40px var(--shadow-color);
+  max-width: calc(100% - var(--spacing-xl) * 2);
+  z-index: 100;
+  animation: slideUp 0.3s ease;
+}
+
+.message-container[hidden] {
+  display: none;
+}
+
+.message-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+/* =====================================================
+   Offline Indicator
+   ===================================================== */
+.offline-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: var(--spacing-sm);
+  background: var(--color-warning);
+  color: #000;
+  text-align: center;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  z-index: 1000;
+  animation: slideDown 0.3s ease;
+}
+
+.offline-indicator[hidden] {
+  display: none;
+}
+
+/* =====================================================
+   Animations
+   ===================================================== */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glow {
+  0%, 100% { 
+    text-shadow: 0 0 40px var(--color-accent-glow);
+  }
+  50% { 
+    text-shadow: 0 0 60px var(--color-accent-glow), 0 0 80px var(--color-accent-glow);
+  }
+}
+
+/* =====================================================
+   Landscape Mode Adjustments
+   ===================================================== */
+@media (orientation: landscape) and (max-height: 500px) {
+  .app-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    max-width: 100%;
+    padding: var(--spacing-sm);
+  }
+  
+  .app-header {
+    width: 100%;
+    padding: var(--spacing-xs) 0;
+  }
+  
+  .speedometer-section {
+    flex: 0 0 50%;
+    padding: 0;
+  }
+  
+  .speedometer-analog .speedometer-wrapper {
+    max-width: 250px;
+  }
+  
+  .digital-speed-value {
+    font-size: 4rem;
+  }
+  
+  .stats-panel {
+    flex: 0 0 45%;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xs);
+    padding: 0 var(--spacing-sm);
+  }
+  
+  .stat-item {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: var(--spacing-sm);
+  }
+  
+  .stat-label {
+    margin-bottom: 0;
+  }
+  
+  .controls-section {
+    width: 100%;
+    padding: var(--spacing-xs) 0;
+  }
+  
+  .control-btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+  
+  .digital-display {
+    padding: var(--spacing-md);
+  }
+  
+  .digital-secondary {
+    gap: var(--spacing-lg);
+  }
+}
+
+/* =====================================================
+   Responsive Adjustments
+   ===================================================== */
+@media (max-width: 380px) {
+  .digital-speed-value {
+    font-size: 4rem;
+  }
+  
+  .speedometer-analog .speedometer-wrapper {
+    max-width: 280px;
+  }
+  
+  .stat-item {
+    padding: var(--spacing-sm);
+  }
+  
+  .stat-value {
+    font-size: var(--font-size-lg);
+  }
+  
+  .header-controls {
+    gap: var(--spacing-xs);
+  }
+  
+  .view-btn {
+    width: 32px;
+    height: 28px;
+  }
+  
+  .theme-btn {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@media (min-width: 768px) {
+  .app-container {
+    padding: var(--spacing-xl);
+  }
+  
+  .speedometer-analog .speedometer-wrapper {
+    max-width: 400px;
+  }
+  
+  .digital-speed-value {
+    font-size: 8rem;
+  }
+}
+
+/* =====================================================
+   Reduced Motion Preference
+   ===================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =====================================================
+   Focus States for Accessibility
+   ===================================================== */
+.control-btn:focus-visible,
+.view-btn:focus-visible,
+.theme-btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* =====================================================
+   Print Styles
+   ===================================================== */
+@media print {
+  .controls-section,
+  .offline-indicator,
+  .message-container,
+  .header-controls {
+    display: none !important;
+  }
+}
