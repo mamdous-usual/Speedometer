@@ -9,7 +9,7 @@ A high-performance Progressive Web App speedometer built with vanilla HTML, CSS,
 
 ## 🌐 Live Demo
 
-**👉 [View Live App](https://speedometer-mamdous.vercel.app/)**
+**👉 [View Live App](https://speedometerweb.vercel.app/)**
 
 Try it out on your phone while walking or driving to see real-time speed tracking!
 
