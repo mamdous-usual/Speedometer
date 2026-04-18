@@ -51,7 +51,7 @@ export class GPSManager {
     this.isActive = false;
     
     /** @type {number} Minimum time between position updates (ms) */
-    this.minUpdateInterval = 200; // Faster updates for smoother experience
+    this.minUpdateInterval = 100; // Faster updates (100ms) for more responsive speed readings
     
     /** @type {number} Last position update timestamp */
     this.lastUpdateTime = 0;
@@ -65,7 +65,7 @@ export class GPSManager {
     this.readingCount = 0;
     
     /** @type {number} Minimum readings before showing speed */
-    this.warmupReadings = 3;
+    this.warmupReadings = 2; // Faster warmup - show speed sooner
     
     /** @type {boolean} Whether warm-up is complete */
     this.isWarmedUp = false;
@@ -79,7 +79,7 @@ export class GPSManager {
     
     // Minimum movement threshold (meters) - ignore GPS drift
     /** @type {number} */
-    this.minMovementThreshold = 1;
+    this.minMovementThreshold = 0.5; // More sensitive to movement (0.5m instead of 1m)
     
     // Geolocation options optimized for speedometer use
     this.geoOptions = {
@@ -229,12 +229,17 @@ export class GPSManager {
         if (calculatedSpeed !== null) {
           rawSpeed = calculatedSpeed;
           isCalculated = true;
+          console.log('[GPS] Speed calculated via Haversine:', (calculatedSpeed * 3.6).toFixed(1), 'km/h');
         } else {
           rawSpeed = 0;
+          console.log('[GPS] Haversine calculation returned null (time delta too small)');
         }
       } else {
         rawSpeed = 0;
+        console.log('[GPS] No previous position for Haversine calculation');
       }
+    } else {
+      console.log('[GPS] Using GPS-provided speed:', (rawSpeed * 3.6).toFixed(1), 'km/h');
     }
 
     // Check minimum movement threshold to avoid GPS drift showing as movement
@@ -249,7 +254,7 @@ export class GPSManager {
       
       // Only consider not moving if GPS speed is also very low AND distance is tiny
       // Don't aggressively zero out - let Kalman filter handle noise
-      if (distance < 1 && rawSpeed < 0.5) { // Less than 1m moved AND < 1.8 km/h
+      if (distance < 0.5 && rawSpeed < 0.3) { // Less than 0.5m moved AND < 1.08 km/h
         actuallyMoving = false;
         rawSpeed = 0;
       }

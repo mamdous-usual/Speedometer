@@ -37,9 +37,9 @@ async function initApp() {
   
   // Initialize Speed Processor - lighter smoothing since GPS is already Kalman filtered
   state.speedProcessor = new SpeedProcessor({
-    smoothingFactor: 0.5,      // Higher = more responsive (GPS already filtered)
+    smoothingFactor: 0.6,      // Higher = more responsive to real movement (GPS already filtered)
     useEMA: true,
-    maxSpeedChangePerSecond: 40  // Allow faster changes for responsiveness
+    maxSpeedChangePerSecond: 50  // Allow faster changes for better responsiveness
   });
   
   // Initialize Speedometer Renderer (analog view)
@@ -196,7 +196,12 @@ function stopTracking() {
  */
 function handlePositionUpdate(data) {
   // Debug logging - remove in production
-  console.log(`[Speed] Raw: ${(data.rawSpeed * 3.6).toFixed(1)} km/h | Filtered: ${(data.speed * 3.6).toFixed(1)} km/h | Accuracy: ${data.accuracy.toFixed(0)}m`);
+  const speedKmh = (data.speed * 3.6).toFixed(1);
+  console.log(`[Speed] Raw: ${(data.rawSpeed * 3.6).toFixed(1)} km/h | Filtered: ${speedKmh} km/h | Accuracy: ${data.accuracy.toFixed(0)}m | Calculated: ${data.isCalculated ? 'YES (Haversine)' : 'NO (GPS provided)'}`);
+  
+  if (speedKmh > 0) {
+    console.log(`[App] ✓ Speed detected: ${speedKmh} km/h`);
+  }
   
   // Process speed through smoother with confidence info
   const processed = state.speedProcessor.process(

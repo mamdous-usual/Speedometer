@@ -77,7 +77,8 @@ export function calculateSpeedFromPositions(pos1, pos2) {
   
   // Avoid division by zero or very small time intervals
   // (which could produce inaccurate speeds)
-  if (timeDiffSec < 0.1) return null;
+  // Lowered threshold from 0.1s to 0.05s to allow faster GPS updates
+  if (timeDiffSec < 0.05) return null;
   
   // Speed = distance / time (m/s)
   const speed = distance / timeDiffSec;
